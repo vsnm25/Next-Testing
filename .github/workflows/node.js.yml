@@ -5,14 +5,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
     branches: "*"
 
 jobs:
   build:
-
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
@@ -21,12 +20,12 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: yarn ci
-    - run: yarn lint
-    - run: yarn test:ci
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - run: npm ci
+      - run: yarn lint
+      - run: yarn test:ci
