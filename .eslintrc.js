@@ -25,5 +25,6 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "@typescript-eslint/no-var-requires": "off",
+    "testing-library/no-render-in-setup": "off",
   },
 };
