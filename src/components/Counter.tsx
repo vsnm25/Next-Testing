@@ -1,20 +1,37 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 const Counter = ({ initialCount = 0 }) => {
   const [count, setCount] = useState(initialCount);
   const [increment, setIncrement] = useState(1);
+  const [bigEnough, setBigEnough] = useState(initialCount >= 15);
 
   const handleMinus = useCallback(() => {
-    setCount((prev) => prev - increment);
+    setTimeout(() => {
+      setCount((prev) => prev - increment);
+    }, 200);
   }, [increment]);
 
   const handlePlus = useCallback(() => {
-    setCount((prev) => prev + increment);
+    setTimeout(() => {
+      setCount((prev) => prev + increment);
+    }, 200);
   }, [increment]);
 
   const handleIncrement = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setIncrement(parseInt(e.target.value) || 1);
   }, []);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (count >= 15) {
+      timeoutId = setTimeout(() => {
+        setBigEnough(true);
+      }, 300);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [count]);
 
   return (
     <div>
@@ -28,6 +45,7 @@ const Counter = ({ initialCount = 0 }) => {
         count: {count}
         <button onClick={handlePlus}>+</button>
       </div>
+      {!bigEnough && <div>I am too small</div>}
     </div>
   );
 };
